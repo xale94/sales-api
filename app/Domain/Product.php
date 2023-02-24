@@ -2,13 +2,8 @@
 
 namespace App\Domain;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Product extends Model
+class Product extends BaseEntity
 {
-    use HasFactory;
-
     protected $table = 'products';
 
     public function shops()
