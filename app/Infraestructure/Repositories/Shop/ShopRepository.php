@@ -27,7 +27,7 @@ class ShopRepository implements IShopRepository
     /**
      * Sends a query to find all the shops.
      *
-     *  @return array result of query search
+     *  @return Collection result of query search
      */
     public function findAll(): Collection
     {
