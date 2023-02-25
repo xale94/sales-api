@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Shop;
 use App\Services\Shops\ShopCreateService;
+use App\Services\Shops\ShopDeleteService;
 use App\Services\Shops\ShopReadService;
 use Illuminate\Http\Request;
 
@@ -18,14 +19,6 @@ class ShopController extends Controller
     public function create(ShopCreateService $service, array $shop)
     {
         return $service->execute($shop);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     public function show(ShopReadService $service, int $shopId)
@@ -49,11 +42,8 @@ class ShopController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Shop $shop)
+    public function destroy(ShopDeleteService $service, int $shopId)
     {
-        //
+        return $service->execute($shopId);
     }
 }
