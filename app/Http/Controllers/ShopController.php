@@ -16,9 +16,10 @@ class ShopController extends Controller
         return $service->executeMultipleFind();
     }
 
-    public function create(ShopCreateService $service, array $shop)
-    {
-        return $service->execute($shop);
+    public function create(ShopCreateService $service, Request $request)
+    {   
+        $data = $request->all();
+        return $service->execute($data);
     }
 
     public function show(ShopReadService $service, int $shopId)
