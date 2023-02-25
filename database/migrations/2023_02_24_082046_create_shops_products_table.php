@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBiginteger('shop_id')->unsigned();
             $table->unsignedBiginteger('product_id')->unsigned();
-
+            $table->integer('quantity');
             $table->foreign('shop_id')->references('id')
                  ->on('shops')->onDelete('cascade');
             $table->foreign('product_id')->references('id')
