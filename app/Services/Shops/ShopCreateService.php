@@ -16,7 +16,7 @@ final class ShopCreateService extends ShopService {
      * Executes create shop service.
      *
      * @param array $shop data for the new row.
-     * @return Shop found shop.
+     * @return Shop created shop.
      */
     public function execute(array $data): Shop
     {
