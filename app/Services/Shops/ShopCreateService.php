@@ -3,7 +3,6 @@ namespace App\Services\Shops;
 
 use App\Domain\Shop;
 use App\Infraestructure\Repositories\Shop\ShopRepository;
-use Illuminate\Database\Eloquent\Collection;
 
 final class ShopCreateService extends ShopService {
 
