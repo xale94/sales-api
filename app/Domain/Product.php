@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class Product extends BaseEntity
+final class Product extends BaseEntity
 {
     protected $table = 'products';
 

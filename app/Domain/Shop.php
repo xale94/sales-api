@@ -2,9 +2,8 @@
 
 namespace App\Domain;
 
-class Shop extends BaseEntity
+final class Shop extends BaseEntity
 {
-
     protected $table = 'shops';
 
     public function products()
