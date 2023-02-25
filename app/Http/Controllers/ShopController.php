@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Shop;
+use App\Services\Shops\ShopCreateService;
 use App\Services\Shops\ShopReadService;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class ShopController extends Controller
         return $service->executeMultipleFind();
     }
 
-    public function create(ShopReadService $service, array $shop)
+    public function create(ShopCreateService $service, array $shop)
     {
-        //
+        return $service->execute($shop);
     }
 
     /**

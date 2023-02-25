@@ -69,7 +69,7 @@ class ShopRepository implements IShopRepository
         $shop->save();
 
         if(count($products) > 0){
-            $shop->products()->create($products);
+            $shop->products()->attach($products);
         }
 
         return $shop;
