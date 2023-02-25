@@ -18,7 +18,7 @@ final class ShopReadService extends ShopService {
      * @param int $id id of shop to find.
      * @return Shop found shop.
      */
-    public function executeFind($id): Shop
+    public function executeFind(int $id): Shop
     {
         return $this->repository->find($id);
     }
