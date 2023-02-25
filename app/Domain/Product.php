@@ -8,6 +8,6 @@ final class Product extends BaseEntity
 
     public function shops()
     {
-        return $this->belongsToMany(Shop::class, 'shops_products', 'product_id', 'shop_id');
+        return $this->belongsToMany(Shop::class, 'shops_products', 'product_id', 'shop_id')->withPivot('quantity');
     }
 }
