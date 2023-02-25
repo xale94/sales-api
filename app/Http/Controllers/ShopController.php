@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Shop;
+use App\Services\Shops\ShopReadService;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
     
-    public function index()
+    public function index(ShopReadService $service)
     {
-        //validar
-        //
+        return $service->executeMultipleFind();
     }
 
     /**
