@@ -21,7 +21,7 @@ class ShopRepository implements IShopRepository
      */
     public function find(int $id): Shop
     {
-        return Shop::find($id);
+        return Shop::with(Product::getTableName())->find($id);
     }
 
     /**

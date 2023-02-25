@@ -14,10 +14,7 @@ class ShopController extends Controller
         return $service->executeMultipleFind();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(ShopReadService $service, array $shop)
     {
         //
     }
@@ -30,12 +27,9 @@ class ShopController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Shop $shop)
+    public function show(ShopReadService $service, int $shopId)
     {
-        //
+        return $service->executeFind($shopId);
     }
 
     /**
