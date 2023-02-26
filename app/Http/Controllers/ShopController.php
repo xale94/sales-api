@@ -10,15 +10,24 @@ use App\Services\Shops\ShopReadService;
 use App\Services\Shops\ShopSellProductService;
 use App\Services\Shops\ShopUpdateService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShopController extends Controller
 {
-    
+
     public function index(ShopReadService $service)
     {
-        return $service->executeMultipleFind();
+        try {
+            if(!$result = Redis::get('shops')){
+                $result = $service->executeMultipleFind();
+                Redis::set('shops', $result);
+            }
+            return response()->json(['result' => $result, 'code' => Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function create(ShopCreateService $service, Request $request)
@@ -36,7 +45,8 @@ class ShopController extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         try {
-            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+            Redis::delete('shops');
+            return response()->json(['result' => $service->execute($data), 'code' => Response::HTTP_ACCEPTED]);
         } catch(ShopException $e) {
             return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
@@ -46,6 +56,7 @@ class ShopController extends Controller
     {
         $data = [];
         $data['shopId'] = $request->route('id');
+        
         $validator = Validator::make($data, [
             'shopId' => 'required|integer',
         ]);
@@ -54,7 +65,11 @@ class ShopController extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         try {
-            return response()->json(['result' => $service->executeFind($data['shopId']), Response::HTTP_ACCEPTED]);
+            if(!$result = Redis::get('shop'.$data['shopId'])){
+                $result = $service->executeFind($data['shopId']);
+                Redis::set('shop', $result);
+            }
+            return response()->json(['result' => $result, 'code' => Response::HTTP_ACCEPTED]);
         } catch(ShopException $e) {
             return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
@@ -77,7 +92,9 @@ class ShopController extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         try {
-            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+            Redis::delete('shops');
+            Redis::delete('shop'.$data['id']);
+            return response()->json(['result' => $service->execute($data), 'code' => Response::HTTP_ACCEPTED]);
         } catch(ShopException $e) {
             return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
@@ -97,7 +114,9 @@ class ShopController extends Controller
         }
 
         try {
-            return response()->json(['result' => $service->execute($data['shopId']), Response::HTTP_ACCEPTED]);
+            Redis::delete('shops');
+            Redis::delete('shop'.$data['shopId']);
+            return response()->json(['result' => $service->execute($data['shopId']), 'code' => Response::HTTP_ACCEPTED]);
         } catch(ShopException $e) {
             return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
@@ -118,7 +137,9 @@ class ShopController extends Controller
         }
 
         try {
-            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+            Redis::delete('shops');
+            Redis::delete('shop'.$data['shop_id']);
+            return response()->json(['result' => $service->execute($data), 'code' => Response::HTTP_ACCEPTED]);
         } catch(ShopException $e) {
             return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
