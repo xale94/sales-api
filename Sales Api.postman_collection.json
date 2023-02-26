@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "14a13d7d-a978-40ec-9423-2b68670a58e1",
+		"name": "Sales Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13153266"
+	},
+	"item": [
+		{
+			"name": "create shop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"name\": \"Tienda A\",\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Set de manteles\",\n            \"quantity\": 20\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Estantería\",\n            \"quantity\": 3\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Armario\",\n            \"quantity\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/api/shop",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shop",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8000/api/shop/2",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shop",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list of shops",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8000/api/shops",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete shop",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8000/api/shop/3",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shop",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update shop",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"id\": 7,\n    \"name\": \"Tienda A\",\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Set de manteles\",\n            \"quantity\": 10\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Estantería\",\n            \"quantity\": 3\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Armario\",\n            \"quantity\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/api/shop",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buy product",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shop_id\": 7,\n    \"product_id\": 1,\n    \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/api/shop/buy",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"shop",
+						"buy"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
