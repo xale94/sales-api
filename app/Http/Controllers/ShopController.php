@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Shop;
 use App\Services\Shops\ShopCreateService;
 use App\Services\Shops\ShopReadService;
+use App\Services\Shops\ShopUpdateService;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -20,33 +21,14 @@ class ShopController extends Controller
         return $service->execute($shop);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function show(ShopReadService $service, int $shopId)
     {
         return $service->executeFind($shopId);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Shop $shop)
+    public function update(ShopUpdateService $service, array $shop)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Shop $shop)
-    {
-        //
+        return $service->execute($shop);
     }
 
     /**
