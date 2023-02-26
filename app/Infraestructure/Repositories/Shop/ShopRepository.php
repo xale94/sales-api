@@ -41,9 +41,20 @@ class ShopRepository implements IShopRepository
      *  @param array $shop object containing the new data.
      *  @return bool true if updates row, otherwise false.
      */
-    public function update(int $id, array $shop): bool
+    public function update(int $id, array $data): Shop
     {
-        return $this->find($id)->update($shop);
+        $shop = $this->find($id);
+        $result = $shop->update($data);
+
+        $products = $data['products'];
+        $productQuantities = [];
+        foreach ($products as $product) {
+            $productQuantities[$product['id']] = ['quantity' => $product['quantity']];
+        }
+
+        $shop->products()->sync($productQuantities);
+
+        return $shop;
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Shops;
 
+use App\Domain\Shop;
 use App\Infraestructure\Repositories\Shop\ShopRepository;
 
 final class ShopUpdateService extends ShopService {
@@ -16,7 +17,7 @@ final class ShopUpdateService extends ShopService {
      * @param array $shop shop data to update.
      * @return bool returns if the shop was updated or not.
      */
-    public function execute(array $shop): bool
+    public function execute(array $shop): Shop
     {
         return $this->repository->update($shop['id'], $shop);
     }
