@@ -44,15 +44,17 @@ class ShopRepository implements IShopRepository
     public function update(int $id, array $data): Shop
     {
         $shop = $this->find($id);
-        $result = $shop->update($data);
+        $shop->update($data);
 
         $products = $data['products'];
-        $productQuantities = [];
-        foreach ($products as $product) {
-            $productQuantities[$product['id']] = ['quantity' => $product['quantity']];
+        if($products && count($products) > 0){
+            $productsData = collect($products)->mapWithKeys(function ($product) {
+                return [$product['id'] => ['quantity' => $product['quantity']]];
+            });
+            $shop->products()->sync($productsData);
+        } else {
+            $shop->products()->detach();
         }
-
-        $shop->products()->sync($productQuantities);
 
         return $shop;
     }
