@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Shop;
+use App\Exceptions\Shop\ShopException;
 use App\Services\Shops\ShopCreateService;
 use App\Services\Shops\ShopDeleteService;
 use App\Services\Shops\ShopReadService;
@@ -34,8 +35,11 @@ class ShopController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        try {
+            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function show(ShopReadService $service, Request $request)
@@ -49,8 +53,11 @@ class ShopController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return response()->json(['result' => $service->executeFind($data['shopId']), Response::HTTP_ACCEPTED]);
+        try {
+            return response()->json(['result' => $service->executeFind($data['shopId']), Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function update(ShopUpdateService $service, Request $request)
@@ -69,8 +76,11 @@ class ShopController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        try {
+            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function destroy(ShopDeleteService $service, Request $request)
@@ -86,7 +96,11 @@ class ShopController extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return response()->json(['result' => $service->execute($data['shopId']), Response::HTTP_ACCEPTED]);
+        try {
+            return response()->json(['result' => $service->execute($data['shopId']), Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function buy(ShopSellProductService $service, Request $request)
@@ -103,6 +117,10 @@ class ShopController extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        try {
+            return response()->json(['result' => $service->execute($data), Response::HTTP_ACCEPTED]);
+        } catch(ShopException $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }
