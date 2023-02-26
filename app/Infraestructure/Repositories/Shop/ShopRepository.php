@@ -77,7 +77,8 @@ class ShopRepository implements IShopRepository
      *  @param array|Collection $products Optional. Object containing the list of products of the new shop.
      *  @return Shop inserted shop.
      */
-    public function create(array $data, array | Collection $products = []): Shop{
+    public function create(array $data, array | Collection $products = []): Shop
+    {
         $shop = new Shop($data);
         $shop->save();
 
@@ -90,5 +91,16 @@ class ShopRepository implements IShopRepository
         $shop->products()->attach($productQuantities);
 
         return $shop;
+    }
+
+    public function findSpecificProductInShop(int $productId, Shop $shop): Product
+    {
+        return $shop->products()->where('product_id', $productId)->first();
+    }
+
+    public function updateShopProductQuantity(Product $product, Shop $shop, int $quantity): Product
+    {
+        $shop->products()->updateExistingPivot($product->id, ['quantity' => $quantity]);
+        return $product;
     }
 }
