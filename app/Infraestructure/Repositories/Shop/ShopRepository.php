@@ -4,7 +4,10 @@ namespace App\Infraestructure\Repositories\Shop;
 
 use App\Domain\Product;
 use App\Domain\Shop;
+use App\Exceptions\Shop\ShopException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShopRepository implements IShopRepository
 {
@@ -21,7 +24,12 @@ class ShopRepository implements IShopRepository
      */
     public function find(int $id): Shop
     {
-        return Shop::with(Product::getTableName())->find($id);
+        try{
+            $shop = Shop::with(Product::getTableName())->findOrFail($id);
+            return $shop;
+        } catch (ModelNotFoundException $e) {
+            throw new ShopException('Shop wasn\'t found', Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -63,11 +71,15 @@ class ShopRepository implements IShopRepository
      * Sends a query to delete a shop.
      * 
      *  @param int $id id of shop.
-     *  @return bool true if deletes row, otherwise false.
+     *  @return bool true if deletes row, otherwise throws exception.
      */
     public function delete(int $id): bool
     {
-        return Shop::find($id)->delete();
+        try{
+            return Shop::findOrFail($id)->delete();
+        }catch(ModelNotFoundException $e){
+            throw new ShopException('Shop wasn\'t found', Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -81,7 +93,6 @@ class ShopRepository implements IShopRepository
     {
         $shop = new Shop($data);
         $shop->save();
-
 
         $productQuantities = [];
         foreach ($products as $product) {

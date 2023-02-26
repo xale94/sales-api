@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Shops;
 
+use App\Exceptions\Shop\ShopException;
 use App\Infraestructure\Repositories\Product\ProductRepository;
 use App\Infraestructure\Repositories\Shop\ShopRepository;
 
@@ -36,6 +37,8 @@ final class ShopSellProductService extends ShopService {
         if($flagCanBuy){
             $quantity = $quantityInShop - $data['quantity'];
             $product = $this->repository->updateShopProductQuantity($product, $shop, $quantity);
+        } else {
+            throw new ShopException($messageBuy);
         }
 
         if($quantity < self::MIN_QUANTITY){
