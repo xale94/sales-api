@@ -1,7 +1,6 @@
 <?php
 namespace App\Services\Shops;
 
-use App\Domain\Shop;
 use App\Infraestructure\Repositories\Shop\ShopRepository;
 
 final class ShopDeleteService extends ShopService {
