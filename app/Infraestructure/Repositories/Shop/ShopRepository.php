@@ -68,9 +68,13 @@ class ShopRepository implements IShopRepository
         $shop = new Shop($data);
         $shop->save();
 
-        if(count($products) > 0){
-            $shop->products()->attach($products);
+
+        $productQuantities = [];
+        foreach ($products as $product) {
+            $productQuantities[$product['id']] = ['quantity' => $product['quantity']];
         }
+
+        $shop->products()->attach($productQuantities);
 
         return $shop;
     }
