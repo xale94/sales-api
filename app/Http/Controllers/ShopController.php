@@ -26,9 +26,10 @@ class ShopController extends Controller
         return $service->executeFind($shopId);
     }
 
-    public function update(ShopUpdateService $service, array $shop)
+    public function update(ShopUpdateService $service, Request $request)
     {
-        return $service->execute($shop);
+        $data = $request->all();
+        return $service->execute($data);
     }
 
     /**
